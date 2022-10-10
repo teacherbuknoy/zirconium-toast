@@ -1,0 +1,94 @@
+.z-toast-group {
+  display          : grid;
+  gap              : var(--z-toast-group-gap, 1vh);
+  justify-content  : center;
+  justify-items    : center;
+  padding          : var(--z-group-padding, 1vh);
+  padding-block-end: 5vh;
+  pointer-events   : none;
+  position         : fixed;
+  right            : 0;
+  bottom           : 0;
+  z-index          : var(--z-toast-group-z-index, 1);
+}
+
+.z-toast-group:not(.left, .right) {
+  width: 100%;
+}
+
+.z-toast-group.top {
+  bottom           : auto;
+  top              : 0;
+  padding-block-end: var(--z-group-padding, 1vh);
+}
+
+.z-toast-group.bottom {
+  top   : auto;
+  bottom: 0;
+}
+
+.z-toast-group.right {
+  left           : auto;
+  right          : 0;
+  justify-content: right;
+  justify-items  : right;
+}
+
+.z-toast-group.left {
+  left           : 0;
+  right          : auto;
+  justify-content: left;
+  justify-items  : left;
+}
+
+.z-toast {
+  background-color: var(--z-toast-background, #333333);
+  border-radius   : var(--z-toast-corner-radius, 6px);
+  color           : var(--z-toast-foreground, #fafafa);
+  font-size       : var(--z-toast-font-size, 1rem);
+  max-width       : min(var(--z-toast-max-width, 35ch), 90vw);
+  padding         : 1ch 2ch;
+  transition      : background-color 300ms;
+
+  will-change: transform;
+  animation  :
+    z-toast-fade-in 300ms ease,
+    z-toast-slide-in 300ms ease,
+    z-toast-fade-out 300ms ease var(--z-toast-duration, 3s);
+
+  --z-toast-background-light: #333333;
+  --z-toast-foreground-light: #fafafa;
+  --z-toast-background-dark : #fafafa;
+  --z-toast-foreground-dark : #333333;
+}
+
+@media (prefers-color-scheme: dark) {
+  .z-toast {
+    --z-toast-background: var(--z-toast-background-dark);
+    --z-toast-foreground: var(--z-toast-foreground-dark);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .z-toast {
+    --z-toast-travel-distance: 5vh;
+  }
+}
+
+@keyframes z-toast-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes z-toast-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes z-toast-slide-in {
+  from {
+    transform: translateY(var(--z-toast-travel-distance, 10px))
+  }
+}
