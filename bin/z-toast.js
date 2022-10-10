@@ -35,13 +35,25 @@ function flipToast(toast) {
   const last = Toaster.offsetHeight
   const invert = last - first
 
-  const animation = Toaster.animate([
-    { transform: `translateY(${invert}px)` },
-    { transform: `tranmslateY(0)` }
-  ], {
-    duration: 150,
-    easing: 'ease-out'
-  })
+  if (Toaster.classList.contains('top')) {
+    Toaster.animate([
+      { height: `${first}px` },
+      { height: `${last}px` },
+    ], {
+      duration: 150,
+      easing: 'ease-out'
+    })
+  }
+  else {
+    Toaster.animate([
+      { transform: `translateY(${invert}px)` },
+      { transform: `translateY(0)` }
+    ], {
+      duration: 150,
+      easing: 'ease-out'
+    })
+  }
+
 }
 
 const Toast = text => {

@@ -1,8 +1,9 @@
 .z-toast-group {
-  display          : grid;
+  display          : flex;
+  flex-direction   : column;
   gap              : var(--z-toast-group-gap, 1vh);
-  justify-content  : center;
-  justify-items    : center;
+  align-content    : center;
+  align-items      : center;
   padding          : var(--z-group-padding, 1vh);
   padding-block-end: 5vh;
   pointer-events   : none;
@@ -20,6 +21,7 @@
   bottom           : auto;
   top              : 0;
   padding-block-end: var(--z-group-padding, 1vh);
+  flex-direction   : column-reverse;
 }
 
 .z-toast-group.bottom {
@@ -28,10 +30,10 @@
 }
 
 .z-toast-group.right {
-  left           : auto;
-  right          : 0;
-  justify-content: right;
-  justify-items  : right;
+  left         : auto;
+  right        : 0;
+  align-content: right;
+  align-items  : right;
 }
 
 .z-toast-group.left {
@@ -51,15 +53,25 @@
   transition      : background-color 300ms;
 
   will-change: transform;
-  animation  :
-    z-toast-fade-in 300ms ease,
-    z-toast-slide-in 300ms ease,
-    z-toast-fade-out 300ms ease var(--z-toast-duration, 3s);
 
   --z-toast-background-light: #333333;
   --z-toast-foreground-light: #fafafa;
   --z-toast-background-dark : #fafafa;
   --z-toast-foreground-dark : #333333;
+}
+
+.z-toast-group:not(.top) .z-toast {
+  animation:
+    z-toast-fade-in 300ms ease,
+    z-toast-slide-up 300ms ease,
+    z-toast-fade-out 300ms ease var(--z-toast-duration, 3s);
+}
+
+.z-toast-group.top .z-toast {
+  animation:
+    z-toast-fade-in 300ms ease,
+    z-toast-slide-down 300ms ease,
+    z-toast-fade-out 300ms ease var(--z-toast-duration, 3s);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -87,8 +99,14 @@
   }
 }
 
-@keyframes z-toast-slide-in {
+@keyframes z-toast-slide-up {
   from {
     transform: translateY(var(--z-toast-travel-distance, 10px))
+  }
+}
+
+@keyframes z-toast-slide-down {
+  from {
+    transform: translateY(calc(var(--z-toast-travel-distance, 10px) * -1))
   }
 }
